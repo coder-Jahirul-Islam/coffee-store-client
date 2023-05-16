@@ -1,7 +1,8 @@
+import Swal from 'sweetalert2'
 
 const AddCoffee = () => {
 
-    const handleAddCoffee = event =>{
+    const handleAddCoffee = event => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
@@ -12,21 +13,28 @@ const AddCoffee = () => {
         const details = form.details.value;
         const photo = form.photo.value;
 
-        const newCoffee = {name,quantity, supplier, taste, category, details, photo}
+        const newCoffee = { name, quantity, supplier, taste, category, details, photo }
         console.log(newCoffee);
         // send data to the server
         fetch('http://localhost:5000/coffee', {
-            method:"POST",
-            headers:{
-                "content-type":"application/json"
-
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
             },
-            body:JSON.stringify(newCoffee)
+            body: JSON.stringify(newCoffee)
         })
-        .then(res =>res.json())
-        .then(data => {
-            console.log(data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'User Added Successfully',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                    })
+                }
+            })
     }
 
 
@@ -102,10 +110,14 @@ const AddCoffee = () => {
                         </label>
                     </div>
                 </div>
-                <input type="submit" className="btn btn-block" value="Add Coffee"/>
+                <input type="submit" className="btn btn-block" value="Add Coffee" />
             </form>
         </div>
     );
 };
 
 export default AddCoffee;
+
+
+
+// 68.5 er 7minutes
